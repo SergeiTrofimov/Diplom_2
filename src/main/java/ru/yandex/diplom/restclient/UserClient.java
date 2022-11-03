@@ -38,7 +38,7 @@ public class UserClient {
     @Step("Удаление пользователя")
     public Response deleteUserRequest(String token) {
         Response response = given()
-                .header("Authorization", "Bearer " + token)
+                .header("authorization",token)
                 .header("Content-type", "application/json")
                 .baseUri(setup.getBaseUri())
                 .when()
@@ -48,8 +48,8 @@ public class UserClient {
     @Step("Получить данные о пользователе")
     public Response getUserRequest(String token) {
         Response response = given()
-                .header("Authorization", "Bearer " + token)
-                .header("Content-type", "application/json")
+                .header("authorization",""+ token)
+               // .header("Content-type", "application/json")
                 .baseUri(setup.getBaseUri())
                 .when()
                 .get(setup.getUserRud());
