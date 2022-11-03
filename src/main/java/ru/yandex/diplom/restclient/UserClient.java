@@ -45,4 +45,14 @@ public class UserClient {
                 .delete(setup.getUserRud());
         return response;
     }
+    @Step("Получить данные о пользователе")
+    public Response getUserRequest(String token) {
+        Response response = given()
+                .header("Authorization", "Bearer " + token)
+                .header("Content-type", "application/json")
+                .baseUri(setup.getBaseUri())
+                .when()
+                .get(setup.getUserRud());
+        return response;
+    }
 }
