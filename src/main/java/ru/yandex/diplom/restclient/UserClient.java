@@ -49,7 +49,7 @@ public class UserClient {
     public Response getUserRequest(String token) {
         Response response = given()
                 .header("authorization", "" + token)
-                // .header("Content-type", "application/json")
+                .header("Content-type", "application/json")
                 .baseUri(setup.getBaseUri())
                 .when()
                 .get(setup.getUserRud());
