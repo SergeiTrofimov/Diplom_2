@@ -1,30 +1,13 @@
 package ru.yandex.diplom.dbo;
 
 public class CreateUserRequest {
-    private String email;
+    CreatedUser user;
 
-
-    // Переменные
-    private String password;
-    private String name;
-
-    // Конструктор
-    public CreateUserRequest(String email, String password, String name) {
-        this.email = email;
-        this.password = password;
-        this.name = name;
+    public CreateUserRequest(CreatedUser user) {
+        this.user = user;
     }
 
-    // Getters
-    public String getEmail() {
-        return email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public String getName() {
-        return name;
+    public CreatedUser getUser() {
+        return user;
     }
 }
