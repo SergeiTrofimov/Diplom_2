@@ -8,6 +8,7 @@ public class Setup {
     private final static String USER_RUD = "/api/auth/user";
     private final static String TOKEN_REFRESH = "/api/auth/token";
     private final static String CLIENT_ORDERS = "/api/orders";
+    private final static String CLIENT_INGREDIENT = "/api/ingredients";
 
     public String getBaseUri() {
         return BASE_URI;
@@ -20,5 +21,6 @@ public class Setup {
     public String getUserRud() {return USER_RUD;}
     public String getTokenRefresh() {return TOKEN_REFRESH;}
     public String getClientOrders() {return CLIENT_ORDERS;}
+    public String getClientIngredient() {return CLIENT_INGREDIENT;}
 
 }

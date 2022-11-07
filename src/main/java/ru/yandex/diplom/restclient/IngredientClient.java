@@ -6,7 +6,7 @@ import ru.yandex.diplom.Setup;
 
 import static io.restassured.RestAssured.given;
 
-public class OrderClient {
+public class IngredientClient {
     Setup setup = new Setup();
 
     @Step("Получить все ингредиенты")
@@ -15,7 +15,7 @@ public class OrderClient {
                 .header("Content-type", "application/json")
                 .baseUri(setup.getBaseUri())
                 .when()
-                .get(setup.getRegisterUser());
+                .get(setup.getClientIngredient());
         return response;
     }
 }
