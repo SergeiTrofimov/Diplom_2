@@ -1,8 +1,6 @@
 import io.restassured.response.Response;
 import org.junit.Test;
-import ru.yandex.diplom.dbo.CreateUserResponse;
 import ru.yandex.diplom.dbo.CreatedUser;
-import ru.yandex.diplom.dbo.LoginUserResponse;
 import ru.yandex.diplom.generator.UserBodyGenerator;
 import ru.yandex.diplom.restclient.UserClient;
 
@@ -13,12 +11,11 @@ public class CreateUserTest {
     UserBodyGenerator generator = new UserBodyGenerator();
     CreatedUser user = generator.generateRandomUser();
 
-
-
     @Test
     public void createUserTest() {
         Response response = userClient.createUserRequest(user);
         response.then().statusCode(200);
+        userClient.clearTestData(user);
     }
 
     @Test
