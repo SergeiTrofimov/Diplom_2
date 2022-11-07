@@ -15,7 +15,7 @@ public class UserClient {
 
     @Step("Создать пользователя")
     public Response createUserRequest(CreatedUser user) {
-        CreateUserRequest body = new CreateUserRequest(user);
+        CreateUserRequest body = new CreateUserRequest(user.getEmail(), user.getPassword(), user.getName());
         Response response = given()
                 .header("Content-type", "application/json")
                 .baseUri(setup.getBaseUri())
