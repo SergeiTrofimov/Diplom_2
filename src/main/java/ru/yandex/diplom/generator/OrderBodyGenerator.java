@@ -24,7 +24,6 @@ public class OrderBodyGenerator {
         for (Ingredient index : ingredients) {
 
             if (index.getType().equals(ingredientType)) {
-                System.out.println(index.getType() + " " + ingredientType + " " + "Ура");
                 parsedIngredient.add(index);
             }
         }
@@ -37,6 +36,6 @@ public class OrderBodyGenerator {
         List<Ingredient> buns = ingredientTypeParser("bun");
         List<Ingredient> mains = ingredientTypeParser("main");
         List<Ingredient> sauces = ingredientTypeParser("sauce");
-       // burgerBody.add(buns.get(rnd(buns.size())).get_id());
+        // burgerBody.add(buns.get(rnd(buns.size())).get_id());
     }
 }
