@@ -38,7 +38,7 @@ public class CreateUserTest {
         //  userClient.clearTestData(user);
     }
 
-  // Логин пользователя
+    // Логин пользователя
     @Test
     public void loginUserTest() { // логин под существующим пользователем
         userClient.createUserRequest(user);
@@ -55,6 +55,7 @@ public class CreateUserTest {
         response.then().statusCode(401);
         userClient.clearTestData(user);
     }
+
     //Изменение пользователя
     @Test
     public void patchUserWithAutorizationTest() // пользователь может поменять данные с токеном
@@ -64,11 +65,12 @@ public class CreateUserTest {
         User updatedUser = new User(tempUser.getEmail(), tempUser.getName());
         Response loginResponse = userClient.loginUserRequest(user.getEmail(), user.getPassword());
         String token = loginResponse.getBody().as(LoginUserResponse.class).getAccessToken();
-        Response updateResponse = userClient.patchUserRequest(updatedUser,token);
+        Response updateResponse = userClient.patchUserRequest(updatedUser, token);
         updateResponse.then().statusCode(200);
         user.setEmail(tempUser.getEmail());
         userClient.clearTestData(user);
     }
+
     @Test
     public void patchUserWithoutAutorizationTest() // пользователь не может поменять данные без токен
     {
