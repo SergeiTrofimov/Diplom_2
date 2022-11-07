@@ -57,7 +57,7 @@ public class CreateUserTest {
     }
     //Изменение пользователя
     @Test
-    public void patchUserWithAutorizationTest()
+    public void patchUserWithAutorizationTest() // пользователь может поменять данные с токеном
     {
         userClient.createUserRequest(user);
         CreatedUser tempUser = generator.generateRandomUser();
@@ -67,6 +67,17 @@ public class CreateUserTest {
         Response updateResponse = userClient.patchUserRequest(updatedUser,token);
         updateResponse.then().statusCode(200);
         user.setEmail(tempUser.getEmail());
+        userClient.clearTestData(user);
+    }
+    @Test
+    public void patchUserWithoutAutorizationTest() // пользователь не может поменять данные без токен
+    {
+        userClient.createUserRequest(user);
+        CreatedUser tempUser = generator.generateRandomUser();
+        User updatedUser = new User(tempUser.getEmail(), tempUser.getName());
+        Response loginResponse = userClient.loginUserRequest(user.getEmail(), user.getPassword());
+        Response updateResponse = userClient.patchUserRequest(updatedUser, null);
+        updateResponse.then().statusCode(401);
         userClient.clearTestData(user);
     }
 }
