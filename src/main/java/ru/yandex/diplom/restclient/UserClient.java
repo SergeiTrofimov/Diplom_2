@@ -3,10 +3,7 @@ package ru.yandex.diplom.restclient;
 import io.qameta.allure.Step;
 import io.restassured.response.Response;
 import ru.yandex.diplom.Setup;
-import ru.yandex.diplom.dbo.CreateUserRequest;
-import ru.yandex.diplom.dbo.CreatedUser;
-import ru.yandex.diplom.dbo.LoginUserRequest;
-import ru.yandex.diplom.dbo.LoginUserResponse;
+import ru.yandex.diplom.dbo.*;
 
 import static io.restassured.RestAssured.given;
 
@@ -58,7 +55,17 @@ public class UserClient {
                 .get(setup.getUserRud());
         return response;
     }
-
+    @Step("Изменить пользователя")
+    public Response patchUserRequest(User user,String token) {
+        Response response = given()
+                .header("authorization", "" + token)
+                .header("Content-type", "application/json")
+                .baseUri(setup.getBaseUri())
+                .body(user)
+                .when()
+                .patch(setup.getUserRud());
+        return response;
+    }
     @Step("Логинимся пользователем, чтобы получить токен и удаляем его.")
     public void clearTestData(CreatedUser user) {
         Response response = loginUserRequest(user.getEmail(), user.getPassword());
