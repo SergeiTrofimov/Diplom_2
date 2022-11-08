@@ -8,6 +8,7 @@ import ru.yandex.diplom.restclient.IngredientClient;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class OrderBodyGenerator {
     public List<Ingredient> getAllIngredientToArray() {
@@ -31,11 +32,17 @@ public class OrderBodyGenerator {
     }
 
     @Test
-    public void generateRandomBurger() {
+    public List<String> generateRandomBurger() {
         List<String> burgerBody = new ArrayList<>();
         List<Ingredient> buns = ingredientTypeParser("bun");
         List<Ingredient> mains = ingredientTypeParser("main");
         List<Ingredient> sauces = ingredientTypeParser("sauce");
-        // burgerBody.add(buns.get(rnd(buns.size())).get_id());
+        Random r = new Random();
+        burgerBody.add(buns.get(r.nextInt(buns.size() - 1)).get_id());
+        for (int i = 0; i <= r.nextInt(4) + 1; i++) {
+            burgerBody.add(mains.get(r.nextInt(mains.size() - 1)).get_id());
+            burgerBody.add(sauces.get(r.nextInt(sauces.size() - 1)).get_id());
+        }
+        return burgerBody;
     }
 }
