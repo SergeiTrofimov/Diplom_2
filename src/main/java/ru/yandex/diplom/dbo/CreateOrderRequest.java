@@ -8,6 +8,7 @@ public class CreateOrderRequest {
     public CreateOrderRequest(ArrayList<Ingredient> ingredients) {
         this.ingredients = ingredients;
     }
+    public CreateOrderRequest() {}
 
     public ArrayList<Ingredient> getIngredients() {
         return ingredients;
