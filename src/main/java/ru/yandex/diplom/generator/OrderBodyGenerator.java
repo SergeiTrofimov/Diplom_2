@@ -1,9 +1,8 @@
 package ru.yandex.diplom.generator;
 
 import com.google.gson.Gson;
+import io.qameta.allure.Step;
 import io.restassured.response.Response;
-import org.apache.commons.lang3.RandomStringUtils;
-import org.junit.Test;
 import ru.yandex.diplom.dbo.Ingredient;
 import ru.yandex.diplom.dbo.IngredientResponse;
 import ru.yandex.diplom.restclient.IngredientClient;
@@ -15,7 +14,9 @@ import java.util.Random;
 
 public class OrderBodyGenerator {
     Gson gson = new Gson();
-    public List<Ingredient> getAllIngredientToArray() {
+
+    @Step("Список всех ингридиентов")
+    public List<Ingredient> getAllIngredientToArray() { // Делаем список всех ингридиентов
         // получаем все ингридиенты
         IngredientClient ingredientClient = new IngredientClient();
         Response allIngredientResponse = ingredientClient.getIngredientRequest();
@@ -23,7 +24,8 @@ public class OrderBodyGenerator {
         return ingredients;
     }
 
-    public List<Ingredient> ingredientTypeParser(String ingredientType) {
+    @Step("Разделяем ингридиенты по типам из общего списка")
+    public List<Ingredient> ingredientTypeParser(String ingredientType) { // Разделяем ингридиенты по типам из общего списка
         List<Ingredient> ingredients = getAllIngredientToArray();
         List<Ingredient> parsedIngredient = new ArrayList<>();
         for (Ingredient index : ingredients) {
@@ -35,8 +37,8 @@ public class OrderBodyGenerator {
         return parsedIngredient;
     }
 
-    @Test
-    public String generateRandomBurger() {
+    @Step("Создаем случайны бургер")
+    public String generateRandomBurger() { // Создаем случайный бургер
         List<String> ingredientList = new ArrayList<>();
         List<Ingredient> buns = ingredientTypeParser("bun");
         List<Ingredient> mains = ingredientTypeParser("main");

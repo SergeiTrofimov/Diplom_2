@@ -7,7 +7,6 @@ public class LoginUserResponse {
     private User user;
 
     //Конструктор
-
     public LoginUserResponse(boolean success, String accessToken, String refreshToken, User user) {
         this.success = success;
         this.accessToken = accessToken;
@@ -15,7 +14,7 @@ public class LoginUserResponse {
         this.user = user;
     }
 
-    // Getters
+    // Геттеры
     public boolean isSuccess() {
         return success;
     }

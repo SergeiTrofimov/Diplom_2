@@ -1,6 +1,7 @@
 package ru.yandex.diplom.dbo;
 
 public class Ingredient {
+    // Переменные
     public String _id;
     public String name;
     public String type;
@@ -10,12 +11,11 @@ public class Ingredient {
     public int calories;
     public int price;
     public String image;
-
     public String image_mobile;
     public String image_large;
     public int __v;
 
-    //
+    //Конструктор
     public Ingredient(String _id, String name, String type, int proteins, int fat, int carbohydrates, int calories, int price, String image, String image_mobile, String image_large, int __v) {
         this._id = _id;
         this.name = name;
@@ -31,7 +31,7 @@ public class Ingredient {
         this.__v = __v;
     }
 
-    //
+    // Геттеры
     public String get_id() {
         return _id;
     }

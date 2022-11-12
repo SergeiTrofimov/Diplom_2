@@ -2,7 +2,6 @@ package ru.yandex.diplom.dbo;
 
 public class CreatedUser extends User {
 
-
     // Перменные
     private String password;
 

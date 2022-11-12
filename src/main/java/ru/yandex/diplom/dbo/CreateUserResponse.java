@@ -3,8 +3,6 @@ package ru.yandex.diplom.dbo;
 public class CreateUserResponse {
     // Переменные
     private boolean success;
-
-
     private String message;
 
     // Конструктор
@@ -12,6 +10,7 @@ public class CreateUserResponse {
         this.success = success;
         this.message = message;
     }
+
     //Getters
     public boolean isSuccess() {
         return success;
