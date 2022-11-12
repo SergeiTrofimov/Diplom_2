@@ -1,28 +1,16 @@
-import com.google.gson.Gson;
 import io.qameta.allure.Step;
 import io.restassured.response.Response;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import ru.yandex.diplom.dbo.CreatedUser;
+import org.junit.jupiter.api.DisplayName;
 import ru.yandex.diplom.dbo.LoginUserResponse;
-import ru.yandex.diplom.generator.OrderBodyGenerator;
-import ru.yandex.diplom.generator.UserBodyGenerator;
-import ru.yandex.diplom.restclient.OrderClient;
-import ru.yandex.diplom.restclient.UserClient;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class OrderTest {
-    String token;
-    UserClient userClient = new UserClient();
-    OrderClient orderClient = new OrderClient();
-    UserBodyGenerator userGenerator = new UserBodyGenerator();
-    OrderBodyGenerator orderGenerator = new OrderBodyGenerator();
-    CreatedUser user = userGenerator.generateRandomUser();
-    Gson gson = new Gson();
+public class OrderTest extends TestsSetup {
 
     @Before
     @Step("Создаем пользователя для тестов, логинимся им, получаем токен")
@@ -39,14 +27,16 @@ public class OrderTest {
     }
 
     @Test
-    public void createOrderWithIngredientTest() {
+    @DisplayName("Можно создать заказ с ингридиентами")
+    public void createOrderWithIngredientTest() { // Можно создать заказ с ингридиентами
         String burgerBody = orderGenerator.generateRandomBurger();
         Response orderResponse = orderClient.createOrderRequest(token, burgerBody);
         orderResponse.then().statusCode(200);
     }
 
     @Test
-    public void createOrderWithoutIngredientTest() {
+    @DisplayName("При попытке создать заказ без ингридиентов вернется ошибка 400")
+    public void createOrderWithoutIngredientTest() { // При попытке создать заказ без ингридиентов вернется ошибка 400
         List<String> ingredientList = new ArrayList<>();
         HashMap<String, List<String>> burgerMap = new HashMap<>();
         burgerMap.put("ingredients", ingredientList);
@@ -56,7 +46,8 @@ public class OrderTest {
     }
 
     @Test
-    public void createOrderWithWrongIngredientTest() {
+    @DisplayName("При попытке создать заказ с ингридентом с неверным хэшем упадет ошибка")
+    public void createOrderWithWrongIngredientTest() { //При попытке создать заказ с ингридентом с неверным хэшем упадет ошибка
         List<String> ingredientList = new ArrayList<>();
         ingredientList.add("66678aaa67633");
         HashMap<String, List<String>> burgerMap = new HashMap<>();
@@ -67,7 +58,8 @@ public class OrderTest {
     }
 
     @Test
-    public void createOrderWithOutTokenTest() {
+    @DisplayName("Можно создать заказ не передав токен пользователя")
+    public void createOrderWithOutTokenTest() { // Можно создать заказ не передав токен пользователя
         String burgerBody = orderGenerator.generateRandomBurger();
         Response orderResponse = orderClient.createOrderRequest(" ", burgerBody);
         orderResponse.then().log().all().statusCode(200);

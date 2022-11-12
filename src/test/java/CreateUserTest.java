@@ -1,21 +1,17 @@
 import io.restassured.response.Response;
 import org.junit.Test;
+import org.junit.jupiter.api.DisplayName;
 import ru.yandex.diplom.dbo.CreatedUser;
 import ru.yandex.diplom.dbo.LoginUserResponse;
 import ru.yandex.diplom.dbo.User;
-import ru.yandex.diplom.generator.UserBodyGenerator;
-import ru.yandex.diplom.restclient.UserClient;
 
 import static org.hamcrest.Matchers.notNullValue;
 
-public class CreateUserTest {
-    UserClient userClient = new UserClient();
-    UserBodyGenerator generator = new UserBodyGenerator();
-    CreatedUser user = generator.generateRandomUser();
-
+public class CreateUserTest extends TestsSetup {
 
     // Create user test
     @Test
+    @DisplayName("Cоздание обычного пользователя")
     public void createUserTest() { // создаем обычного пользователя
         Response response = userClient.createUserRequest(user);
         response.then().log().all().statusCode(200);
@@ -23,6 +19,7 @@ public class CreateUserTest {
     }
 
     @Test
+    @DisplayName("Нельзя создать дубликат пользователя")
     public void cantCreateDuplicateUserTest() { // не можем создать дубликат
         userClient.createUserRequest(user);
         Response response = userClient.createUserRequest(user);
@@ -31,15 +28,16 @@ public class CreateUserTest {
     }
 
     @Test
+    @DisplayName("Нельзя создать пользователя с пустым телом запроса")
     public void cantCreateEmptyUserTest() { // не можем создать пользователя с пустым телом
         CreatedUser user = new CreatedUser(null, null, null);
         Response response = userClient.createUserRequest(user);
         response.then().log().all().statusCode(403);
-        //  userClient.clearTestData(user);
     }
 
     // Логин пользователя
     @Test
+    @DisplayName("Логин под созданным пользователем успешен")
     public void loginUserTest() { // логин под существующим пользователем
         userClient.createUserRequest(user);
         Response response = userClient.loginUserRequest(user.getEmail(), user.getPassword());
@@ -49,7 +47,8 @@ public class CreateUserTest {
     }
 
     @Test
-    public void loginWrongCredentialUserTest() { // логин под существующим пользователем
+    @DisplayName("Логин с неверным паролем")
+    public void loginWrongCredentialUserTest() { // логин под существующим пользователем с неверным паролем
         userClient.createUserRequest(user);
         Response response = userClient.loginUserRequest(user.getEmail(), user.getName());
         response.then().log().all().statusCode(401);
@@ -58,10 +57,11 @@ public class CreateUserTest {
 
     //Изменение пользователя
     @Test
+    @DisplayName("Пользователь может поменять данные с токеном")
     public void patchUserWithAuthorizationTest() // пользователь может поменять данные с токеном
     {
         userClient.createUserRequest(user);
-        CreatedUser tempUser = generator.generateRandomUser();
+        CreatedUser tempUser = userGenerator.generateRandomUser();
         User updatedUser = new User(tempUser.getEmail(), tempUser.getName());
         Response loginResponse = userClient.loginUserRequest(user.getEmail(), user.getPassword());
         String token = loginResponse.getBody().as(LoginUserResponse.class).getAccessToken();
@@ -72,10 +72,11 @@ public class CreateUserTest {
     }
 
     @Test
+    @DisplayName("Пользователь не может поменять данные без токена")
     public void patchUserWithoutAuthorizationTest() // пользователь не может поменять данные без токен
     {
         userClient.createUserRequest(user);
-        CreatedUser tempUser = generator.generateRandomUser();
+        CreatedUser tempUser = userGenerator.generateRandomUser();
         User updatedUser = new User(tempUser.getEmail(), tempUser.getName());
         Response loginResponse = userClient.loginUserRequest(user.getEmail(), user.getPassword());
         Response updateResponse = userClient.patchUserRequest(updatedUser, null);

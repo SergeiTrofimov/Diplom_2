@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="7" failures="0" name="CreateUserTest" time="10.182" errors="0" skipped="0">
+<testsuite tests="7" failures="0" name="CreateUserTest" time="8.687" errors="0" skipped="0">
   <properties>
     <property name="idea.version" value="2022.2.3"/>
     <property name="java.runtime.name" value="OpenJDK Runtime Environment"/>
@@ -64,11 +64,11 @@
     <property name="sun.desktop" value="windows"/>
     <property name="sun.cpu.isalist" value="amd64"/>
   </properties>
-  <testcase classname="CreateUserTest" name="patchUserWithAuthorizationTest" time="4.492"/>
-  <testcase classname="CreateUserTest" name="loginUserTest" time="1.206"/>
-  <testcase classname="CreateUserTest" name="cantCreateEmptyUserTest" time="0.226"/>
-  <testcase classname="CreateUserTest" name="cantCreateDuplicateUserTest" time="1.029"/>
-  <testcase classname="CreateUserTest" name="createUserTest" time="0.854"/>
-  <testcase classname="CreateUserTest" name="patchUserWithoutAuthorizationTest" time="1.259"/>
-  <testcase classname="CreateUserTest" name="loginWrongCredentialUserTest" time="1.116"/>
+  <testcase classname="CreateUserTest" name="patchUserWithAuthorizationTest" time="4.152"/>
+  <testcase classname="CreateUserTest" name="loginUserTest" time="0.909"/>
+  <testcase classname="CreateUserTest" name="cantCreateEmptyUserTest" time="0.139"/>
+  <testcase classname="CreateUserTest" name="cantCreateDuplicateUserTest" time="0.854"/>
+  <testcase classname="CreateUserTest" name="createUserTest" time="0.696"/>
+  <testcase classname="CreateUserTest" name="patchUserWithoutAuthorizationTest" time="0.951"/>
+  <testcase classname="CreateUserTest" name="loginWrongCredentialUserTest" time="0.986"/>
 </testsuite>
