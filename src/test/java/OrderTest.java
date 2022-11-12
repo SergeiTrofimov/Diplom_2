@@ -39,37 +39,37 @@ public class OrderTest {
     }
 
     @Test
-    public void createOrderWithIngredient() {
+    public void createOrderWithIngredientTest() {
         String burgerBody = orderGenerator.generateRandomBurger();
         Response orderResponse = orderClient.createOrderRequest(token, burgerBody);
         orderResponse.then().statusCode(200);
     }
 
     @Test
-    public void createOrderWithoutIngredient() {
+    public void createOrderWithoutIngredientTest() {
         List<String> ingredientList = new ArrayList<>();
         HashMap<String, List<String>> burgerMap = new HashMap<>();
         burgerMap.put("ingredients", ingredientList);
         String burgerBody = gson.toJson(burgerMap);
         Response orderResponse = orderClient.createOrderRequest(token, burgerBody);
-        orderResponse.then().statusCode(400);
+        orderResponse.then().log().all().statusCode(400);
     }
 
     @Test
-    public void createOrderWithWrongIngredient() {
+    public void createOrderWithWrongIngredientTest() {
         List<String> ingredientList = new ArrayList<>();
         ingredientList.add("66678aaa67633");
         HashMap<String, List<String>> burgerMap = new HashMap<>();
         burgerMap.put("ingredients", ingredientList);
         String burgerBody = gson.toJson(burgerMap);
         Response orderResponse = orderClient.createOrderRequest(token, burgerBody);
-        orderResponse.then().statusCode(500);
+        orderResponse.then().log().all().header("Content-type", "text/html; charset=utf-8").statusCode(500);
     }
 
     @Test
-    public void createOrderWithOutToken() {
+    public void createOrderWithOutTokenTest() {
         String burgerBody = orderGenerator.generateRandomBurger();
         Response orderResponse = orderClient.createOrderRequest(" ", burgerBody);
-        orderResponse.then().statusCode(200);
+        orderResponse.then().log().all().statusCode(200);
     }
 }

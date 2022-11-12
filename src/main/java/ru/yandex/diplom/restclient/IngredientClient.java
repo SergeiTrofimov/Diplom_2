@@ -11,7 +11,7 @@ public class IngredientClient {
 
     @Step("Получить все ингредиенты")
     public Response getIngredientRequest() {
-        Response response = given()
+        Response response = given().log().all()
                 .header("Content-type", "application/json")
                 .baseUri(setup.getBaseUri())
                 .when()

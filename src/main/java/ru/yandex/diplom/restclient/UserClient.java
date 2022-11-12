@@ -13,7 +13,7 @@ public class UserClient {
     @Step("Создать пользователя")
     public Response createUserRequest(CreatedUser user) {
         CreateUserRequest body = new CreateUserRequest(user.getEmail(), user.getPassword(), user.getName());
-        Response response = given()
+        Response response = given().log().all()
                 .header("Content-type", "application/json")
                 .baseUri(setup.getBaseUri())
                 .body(body)
@@ -25,7 +25,7 @@ public class UserClient {
     @Step("Логин пользователя")
     public Response loginUserRequest(String email, String password) {
         LoginUserRequest user = new LoginUserRequest(email, password);
-        Response response = given()
+        Response response = given().log().all()
                 .header("Content-type", "application/json")
                 .baseUri(setup.getBaseUri())
                 .body(user)
@@ -36,7 +36,7 @@ public class UserClient {
 
     @Step("Удаление пользователя")
     public Response deleteUserRequest(String token) {
-        Response response = given()
+        Response response = given().log().all()
                 .header("authorization", token)
                 .header("Content-type", "application/json")
                 .baseUri(setup.getBaseUri())
@@ -47,7 +47,7 @@ public class UserClient {
 
     @Step("Получить данные о пользователе")
     public Response getUserRequest(String token) {
-        Response response = given()
+        Response response = given().log().all()
                 .header("authorization", "" + token)
                 .header("Content-type", "application/json")
                 .baseUri(setup.getBaseUri())
@@ -57,7 +57,7 @@ public class UserClient {
     }
     @Step("Изменить пользователя")
     public Response patchUserRequest(User user,String token) {
-        Response response = given()
+        Response response = given().log().all()
                 .header("authorization", "" + token)
                 .header("Content-type", "application/json")
                 .baseUri(setup.getBaseUri())

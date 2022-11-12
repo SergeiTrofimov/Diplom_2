@@ -18,7 +18,7 @@ public class CreateUserTest {
     @Test
     public void createUserTest() { // создаем обычного пользователя
         Response response = userClient.createUserRequest(user);
-        response.then().statusCode(200);
+        response.then().log().all().statusCode(200);
         userClient.clearTestData(user);
     }
 
@@ -26,7 +26,7 @@ public class CreateUserTest {
     public void cantCreateDuplicateUserTest() { // не можем создать дубликат
         userClient.createUserRequest(user);
         Response response = userClient.createUserRequest(user);
-        response.then().statusCode(403);
+        response.then().log().all().statusCode(403);
         userClient.clearTestData(user);
     }
 
@@ -34,7 +34,7 @@ public class CreateUserTest {
     public void cantCreateEmptyUserTest() { // не можем создать пользователя с пустым телом
         CreatedUser user = new CreatedUser(null, null, null);
         Response response = userClient.createUserRequest(user);
-        response.then().statusCode(403);
+        response.then().log().all().statusCode(403);
         //  userClient.clearTestData(user);
     }
 
@@ -43,7 +43,7 @@ public class CreateUserTest {
     public void loginUserTest() { // логин под существующим пользователем
         userClient.createUserRequest(user);
         Response response = userClient.loginUserRequest(user.getEmail(), user.getPassword());
-        response.then().statusCode(200);
+        response.then().log().all().statusCode(200);
         response.then().assertThat().body(notNullValue());
         userClient.clearTestData(user);
     }
@@ -52,13 +52,13 @@ public class CreateUserTest {
     public void loginWrongCredentialUserTest() { // логин под существующим пользователем
         userClient.createUserRequest(user);
         Response response = userClient.loginUserRequest(user.getEmail(), user.getName());
-        response.then().statusCode(401);
+        response.then().log().all().statusCode(401);
         userClient.clearTestData(user);
     }
 
     //Изменение пользователя
     @Test
-    public void patchUserWithAutorizationTest() // пользователь может поменять данные с токеном
+    public void patchUserWithAuthorizationTest() // пользователь может поменять данные с токеном
     {
         userClient.createUserRequest(user);
         CreatedUser tempUser = generator.generateRandomUser();
@@ -66,20 +66,20 @@ public class CreateUserTest {
         Response loginResponse = userClient.loginUserRequest(user.getEmail(), user.getPassword());
         String token = loginResponse.getBody().as(LoginUserResponse.class).getAccessToken();
         Response updateResponse = userClient.patchUserRequest(updatedUser, token);
-        updateResponse.then().statusCode(200);
+        updateResponse.then().log().all().statusCode(200);
         user.setEmail(tempUser.getEmail());
         userClient.clearTestData(user);
     }
 
     @Test
-    public void patchUserWithoutAutorizationTest() // пользователь не может поменять данные без токен
+    public void patchUserWithoutAuthorizationTest() // пользователь не может поменять данные без токен
     {
         userClient.createUserRequest(user);
         CreatedUser tempUser = generator.generateRandomUser();
         User updatedUser = new User(tempUser.getEmail(), tempUser.getName());
         Response loginResponse = userClient.loginUserRequest(user.getEmail(), user.getPassword());
         Response updateResponse = userClient.patchUserRequest(updatedUser, null);
-        updateResponse.then().statusCode(401);
+        updateResponse.then().log().all().statusCode(401);
         userClient.clearTestData(user);
     }
 }
